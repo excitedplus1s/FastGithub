@@ -33,3 +33,27 @@ jobs:
       with:
         name: fastgithub_${{ matrix.arch }}
         path: ./publish/fastgithub_${{ matrix.arch }}/fastgithub
+
+  build-macos:
+    runs-on: macOS-latest
+    strategy:
+      matrix:
+        arch: [osx-x64, osx-arm64]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Install dependencies
+      run: dotnet restore
+      
+    - name: build
+      run: |
+        dotnet publish -c Release /p:PublishSingleFile=true /p:PublishTrimmed=true --self-contained -r ${{ matrix.arch }} -o "./publish/fastgithub_${{ matrix.arch }}" ./FastGithub/FastGithub.csproj
+
+    - uses: actions/upload-artifact@v1
+      with:
+        name: fastgithub_${{ matrix.arch }}
+        path: ./publish/fastgithub_${{ matrix.arch }}/fastgithub
