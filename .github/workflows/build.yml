@@ -4,6 +4,10 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  workflow_dispatch:
+  release:
+    types:
+      - created
     
 env:
   DOTNET_VERSION: '6.0.x'
@@ -33,6 +37,18 @@ jobs:
       with:
         name: fastgithub_${{ matrix.arch }}
         path: ./publish/fastgithub_${{ matrix.arch }}
+        
+    - name: Release Linux
+      uses: actions/upload-release-asset@v1
+      if: ${{ github.event_name == 'release' }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./publish/fastgithub_${{ matrix.arch }}
+        asset_name: fastgithub_${{ matrix.arch }}.zip
+        asset_content_type: application/octet-stream
+
 
   build-macos:
     runs-on: macOS-latest
@@ -57,6 +73,17 @@ jobs:
       with:
         name: fastgithub_${{ matrix.arch }}
         path: ./publish/fastgithub_${{ matrix.arch }}
+        
+    - name: Release macOS
+      uses: actions/upload-release-asset@v1
+      if: ${{ github.event_name == 'release' }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./publish/fastgithub_${{ matrix.arch }}
+        asset_name: fastgithub_${{ matrix.arch }}.zip
+        asset_content_type: application/octet-stream
 
   build-windows:
     runs-on: windows-latest
@@ -85,3 +112,14 @@ jobs:
       with:
         name: fastgithub_${{ matrix.arch }}
         path: ./publish/fastgithub_${{ matrix.arch }}
+    
+    - name: Release Windows
+      uses: actions/upload-release-asset@v1
+      if: ${{ github.event_name == 'release' }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./publish/fastgithub_${{ matrix.arch }}
+        asset_name: fastgithub_${{ matrix.arch }}.zip
+        asset_content_type: application/octet-stream
