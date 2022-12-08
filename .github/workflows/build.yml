@@ -27,7 +27,7 @@ jobs:
       
     - name: build
       run: |
-        dotnet publish -c Release /p:PublishSingleFile=true /p:PublishTrimmed=true --self-contained -r ${{ matrix.arch }} -o "./publish/fastgithub_${{ matrix.os }}" ./FastGithub/FastGithub.csproj
+        dotnet publish -c Release /p:PublishSingleFile=true /p:PublishTrimmed=true --self-contained -r ${{ matrix.arch }} -o "./publish/fastgithub_${{ matrix.arch }}" ./FastGithub/FastGithub.csproj
 
     - uses: actions/upload-artifact@v1
       with:
