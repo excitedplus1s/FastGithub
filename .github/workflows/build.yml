@@ -37,7 +37,11 @@ jobs:
       with:
         name: fastgithub_${{ matrix.arch }}
         path: ./publish/fastgithub_${{ matrix.arch }}
-        
+      
+    - name: Archive 
+      run: |
+        zip fastgithub_${{ matrix.arch }}.zip ./publish/fastgithub_${{ matrix.arch }} -r
+          
     - name: Release Linux
       uses: actions/upload-release-asset@v1
       if: ${{ github.event_name == 'release' }}
@@ -45,7 +49,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./publish/fastgithub_${{ matrix.arch }}
+        asset_path: fastgithub_${{ matrix.arch }}.zip
         asset_name: fastgithub_${{ matrix.arch }}.zip
         asset_content_type: application/octet-stream
 
@@ -74,6 +78,10 @@ jobs:
         name: fastgithub_${{ matrix.arch }}
         path: ./publish/fastgithub_${{ matrix.arch }}
         
+    - name: Archive 
+      run: |
+        zip fastgithub_${{ matrix.arch }}.zip ./publish/fastgithub_${{ matrix.arch }} -r
+             
     - name: Release macOS
       uses: actions/upload-release-asset@v1
       if: ${{ github.event_name == 'release' }}
@@ -81,7 +89,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./publish/fastgithub_${{ matrix.arch }}
+        asset_path: fastgithub_${{ matrix.arch }}.zip
         asset_name: fastgithub_${{ matrix.arch }}.zip
         asset_content_type: application/octet-stream
 
@@ -112,6 +120,10 @@ jobs:
       with:
         name: fastgithub_${{ matrix.arch }}
         path: ./publish/fastgithub_${{ matrix.arch }}
+    
+    - name: Archive 
+      run: |
+        zip fastgithub_${{ matrix.arch }}.zip ./publish/fastgithub_${{ matrix.arch }} -r          
     
     - name: Release Windows
       uses: actions/upload-release-asset@v1
