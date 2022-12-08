@@ -40,7 +40,7 @@ jobs:
       
     - name: Archive 
       run: |
-        zip fastgithub_${{ matrix.arch }}.zip ./publish/fastgithub_${{ matrix.arch }} -r
+        zip fastgithub_${{ matrix.arch }}.zip ./publish/fastgithub_${{ matrix.arch }} -r -j
           
     - name: Release Linux
       uses: actions/upload-release-asset@v1
@@ -80,7 +80,7 @@ jobs:
         
     - name: Archive 
       run: |
-        zip fastgithub_${{ matrix.arch }}.zip ./publish/fastgithub_${{ matrix.arch }} -r
+        zip fastgithub_${{ matrix.arch }}.zip ./publish/fastgithub_${{ matrix.arch }} -r -j
              
     - name: Release macOS
       uses: actions/upload-release-asset@v1
@@ -123,7 +123,7 @@ jobs:
     
     - name: Archive 
       run: |
-        zip fastgithub_${{ matrix.arch }}.zip ./publish/fastgithub_${{ matrix.arch }} -r          
+       Compress-Archive  ./publish/fastgithub_${{ matrix.arch }} fastgithub_${{ matrix.arch }}.zip   
     
     - name: Release Windows
       uses: actions/upload-release-asset@v1
